@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Customer App</string>
+    <string name="title_activity_home_screen">Home</string>
+    <string name="title_activity_product_details">Product Details</string>
+    <string name="title_activity_product_listing">Products</string>
+    <string name="title_activity_add_address">Add Address</string>
+</resources>
