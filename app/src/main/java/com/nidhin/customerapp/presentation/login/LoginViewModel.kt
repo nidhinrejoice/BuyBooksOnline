@@ -11,7 +11,6 @@ import com.nidhin.customerapp.presentation.LoginEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -34,7 +33,8 @@ class LoginViewModel @Inject constructor(
     fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.SendOtp -> {
-                sendOtp(event.mobile)
+//                sendOtp(event.mobile)
+                verifyOtp("1234", event.mobile)
             }
             is LoginEvent.VerifyOtp -> {
                 timerJob?.cancel()
@@ -57,7 +57,7 @@ class LoginViewModel @Inject constructor(
         job = viewModelScope.launch {
             loginUseCases.sendOtp(mobile).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is Resource.Success-> {
                         _state.value = _state.value.copy(
                             showMessage = result.data!!, waitingForOtp = true,
                             inProgress = false

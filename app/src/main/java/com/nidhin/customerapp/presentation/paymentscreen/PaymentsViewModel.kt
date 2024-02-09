@@ -4,7 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nidhin.customerapp.commons.Resource
 import com.nidhin.customerapp.commons.UiStateViewModel
 import com.nidhin.customerapp.domain.model.PaymentMetaData
 import com.nidhin.customerapp.domain.usecases.paymentscreen.ConfirmPayment
@@ -50,13 +49,13 @@ class PaymentsViewModel @Inject constructor(
         job = viewModelScope.launch {
             confirmPayment(paymentMetaData).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _success.value = true
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         _toast.value = result.message
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }

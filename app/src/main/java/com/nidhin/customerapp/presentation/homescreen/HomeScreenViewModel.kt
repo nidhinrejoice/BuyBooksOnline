@@ -43,14 +43,14 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.checkUserLoggedin().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _loggedIn.value = true
                         refreshInventory()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         _loggedIn.value = false
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -63,17 +63,17 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.refreshInventory().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data!!
                         updateCart()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         result.message?.let { _toast.emit(it) }
                         _state.value = _state.value.copy(
                             loading = false, errorMessage = result.message.toString()
                         )
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
                         _state.value = HomeScreenState(
                             loading = true,
                             loadingMessage = "Refreshing inventory...",
@@ -95,12 +95,12 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.addProductToCart(itemCode).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         updateCart()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -113,12 +113,12 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.minusProductFromCart(itemCode).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         updateCart()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -131,7 +131,7 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.getCartDetails().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data?.let {
                             _state.value.copy(
                                 cartDetails = it,
@@ -139,9 +139,9 @@ class HomeScreenViewModel @Inject constructor(
                             )
                         }!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -154,16 +154,16 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.getUserOrders().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data?.let {
                             _state.value.copy(
                                 orders = _state.value.orders.plus(it)
                             )
                         }!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -183,9 +183,9 @@ class HomeScreenViewModel @Inject constructor(
                             )
                         }!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -202,16 +202,16 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.getAddresses().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data?.let {
                             _state.value.copy(
                                 user = it
                             )
                         }!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -224,18 +224,18 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.placeOrder(cartDetails).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = _state.value.copy(
                             loading = false, loadingMessage = ""
                         )
                         result.data?.let { _gotoPayment.emit(it) }
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         _state.value = _state.value.copy(
                             loading = false, loadingMessage = ""
                         )
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
                         _state.value = _state.value.copy(
                             loading = true, loadingMessage = "Placing the order"
                         )
@@ -250,14 +250,14 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.deleteAddress(addressId).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _toast.emit("Address deleted")
                         getUserAddresses()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         result.message?.let { _toast.emit(it) }
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -270,14 +270,14 @@ class HomeScreenViewModel @Inject constructor(
         job = viewModelScope.launch {
             homeScreenUseCases.logoutUser().collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _toast.emit("Logged out successfully")
                         checkUserLoggedIn()
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         result.message?.let { _toast.emit(it) }
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }

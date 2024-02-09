@@ -4,7 +4,6 @@ import com.nidhin.customerapp.commons.Resource
 import com.nidhin.customerapp.domain.model.PaymentMetaData
 import com.nidhin.customerapp.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException

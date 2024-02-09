@@ -6,14 +6,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nidhin.customerapp.commons.Resource
 import com.nidhin.customerapp.commons.UiStateViewModel
 import com.nidhin.customerapp.data.remote.dto.Address
 import com.nidhin.customerapp.domain.usecases.addaddress.AddAddress
 import com.nidhin.customerapp.presentation.productdetails.ProductDetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,15 +54,15 @@ class AddAddressViewModel @Inject constructor(
         job = viewModelScope.launch {
             addAddress.invoke(address).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _toast.value = result.message
                         _progress.value = ""
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                         _toast.value = result.message
                         _progress.value = ""
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
                         _progress.value = result.message
 
                     }

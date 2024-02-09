@@ -6,14 +6,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nidhin.customerapp.commons.Resource
 import com.nidhin.customerapp.commons.UiStateViewModel
 import com.nidhin.customerapp.domain.usecases.productdetails.AddProductToCart
 import com.nidhin.customerapp.domain.usecases.productdetails.GetProductDetails
 import com.nidhin.customerapp.domain.usecases.productdetails.MinusProductFromCart
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,12 +36,12 @@ class ProductDetailsViewModel @Inject constructor(
         job = viewModelScope.launch {
             getProductDetails(itemCode).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -60,12 +58,12 @@ class ProductDetailsViewModel @Inject constructor(
         job = viewModelScope.launch {
             addProductToCart(itemCode).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }
@@ -78,12 +76,12 @@ class ProductDetailsViewModel @Inject constructor(
         job = viewModelScope.launch {
             minusProductFromCart(itemCode).collect { result ->
                 when (result) {
-                    is Resource.Success -> {
+                    is com.nidhin.customerapp.commons.Resource.Success -> {
                         _state.value = result.data!!
                     }
-                    is Resource.Error -> {
+                    is com.nidhin.customerapp.commons.Resource.Error -> {
                     }
-                    is Resource.Loading -> {
+                    is com.nidhin.customerapp.commons.Resource.Loading -> {
 
                     }
                 }

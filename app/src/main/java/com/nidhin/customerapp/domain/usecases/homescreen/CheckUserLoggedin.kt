@@ -1,13 +1,9 @@
 package com.nidhin.customerapp.domain.usecases.homescreen
 
-import android.util.Log
 import com.nidhin.customerapp.commons.Resource
 import com.nidhin.customerapp.domain.repository.HomeRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 class CheckUserLoggedin @Inject constructor(
